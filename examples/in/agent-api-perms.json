@@ -1,0 +1,98 @@
+{
+  "resources": [
+    {
+      "key": "containers",
+      "label": "Containers",
+      "description": "Docker containers",
+      "scope": "env",
+      "actions": [
+        {"key": "list", "permission": "containers:list", "label": "List", "description": "List containers", "requires": [], "requiresExpanded": [], "endpoints": []}
+      ]
+    },
+    {
+      "key": "images",
+      "label": "Images",
+      "description": "Docker images",
+      "scope": "env",
+      "actions": [
+        {"key": "list", "permission": "images:list", "label": "List", "description": "List images", "requires": [], "requiresExpanded": [], "endpoints": []}
+      ]
+    },
+    {
+      "key": "registries",
+      "label": "Registries",
+      "description": "Container registries",
+      "scope": "env",
+      "actions": [
+        {"key": "list", "permission": "registries:list", "label": "List", "description": "List registries", "requires": [], "requiresExpanded": [], "endpoints": []}
+      ]
+    },
+    {
+      "key": "system",
+      "label": "System",
+      "description": "Host system information",
+      "scope": "env",
+      "actions": [
+        {"key": "read", "permission": "system:read", "label": "Read", "description": "Read system info", "requires": [], "requiresExpanded": [], "endpoints": []}
+      ]
+    }
+  ],
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/agents/{id}/containers",
+      "operationId": "listContainers",
+      "access": "permission",
+      "permission": "containers:list"
+    },
+    {
+      "method": "GET",
+      "path": "/agents/{id}/images/tags",
+      "operationId": "listImageTags",
+      "access": "actionPermissions",
+      "actionParam": "action",
+      "actionPermissions": {"list": "images:list"}
+    },
+    {
+      "method": "GET",
+      "path": "/agents/{id}/health",
+      "operationId": "agentHealth",
+      "access": "public"
+    },
+    {
+      "method": "GET",
+      "path": "/agents/{id}/registries",
+      "operationId": "listRegistries",
+      "access": "authenticated"
+    },
+    {
+      "method": "GET",
+      "path": "/agents/{id}/system/info",
+      "operationId": "systemInfo",
+      "access": "globalAdmin",
+      "globalAdmin": true
+    },
+    {
+      "method": "POST",
+      "path": "/agents/{id}/system/prune",
+      "operationId": "pruneSystem",
+      "access": "sudo",
+      "globalAdmin": false
+    },
+    {
+      "method": "GET",
+      "path": "/agents/{id}/legacy-report",
+      "operationId": "legacyReport",
+      "access": "permission",
+      "permission": "reports:read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/users",
+      "operationId": "listUsers",
+      "access": "permission",
+      "permission": "users:list"
+    }
+  ],
+  "unreferencedPermissions": []
+}

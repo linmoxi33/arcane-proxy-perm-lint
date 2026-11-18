@@ -1,0 +1,41 @@
+{
+  "tool": "arcane-proxy-perm-lint",
+  "version": "1.0.0",
+  "prefix": "/agents/{id}",
+  "summary": {
+    "agentEndpoints": 7,
+    "covered": 4,
+    "uncovered": 3,
+    "dangling": 1,
+    "ignoredNonAgent": 1,
+    "ok": false
+  },
+  "uncovered": [
+    {
+      "method": "GET",
+      "path": "/agents/{id}/registries",
+      "access": "authenticated",
+      "reason": "authenticated endpoint carries no arcane:requiredPermission, so the proxy matcher registers no rule"
+    },
+    {
+      "method": "GET",
+      "path": "/agents/{id}/system/info",
+      "access": "globalAdmin",
+      "reason": "globalAdmin-gated endpoint has no permission mapping; matcher skips it"
+    },
+    {
+      "method": "POST",
+      "path": "/agents/{id}/system/prune",
+      "access": "sudo",
+      "reason": "sudo-gated endpoint has no permission mapping; matcher skips it"
+    }
+  ],
+  "dangling": [
+    {
+      "method": "GET",
+      "path": "/agents/{id}/legacy-report",
+      "permission": "reports:read",
+      "reason": "permission is referenced by an endpoint but absent from the catalog"
+    }
+  ]
+}
